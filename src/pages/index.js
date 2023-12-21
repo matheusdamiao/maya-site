@@ -125,7 +125,7 @@ const IndexPage = () => {
             />
             <a
               href="#onde"
-              className="text-sm lg:text-xl text-white hover:underline"
+              className="text-base lg:text-xl text-white hover:underline"
             >
               Onde vai ser
             </a>
@@ -138,7 +138,7 @@ const IndexPage = () => {
             />
             <a
               href="#confirmar"
-              className="text-sm lg:text-xl text-white hover:underline"
+              className="text-base lg:text-xl text-white hover:underline"
             >
               Já confirmou sua presença?
             </a>
