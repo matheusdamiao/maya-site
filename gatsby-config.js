@@ -9,12 +9,13 @@
  */
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Maya faz 1 ano`,
+    description: `Site para os convidados do aniversário de 1 ano de Maya`,
+    author: `Design by Luana Antunes & code by Matheus Damião`,
     siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
   },
   plugins: [
+    "gatsby-plugin-postcss",
     `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -28,8 +29,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `Maya's one-year birthday`,
+        short_name: `Maya's party`,
         start_url: `/`,
         background_color: `#663399`,
         // This will impact how browsers show your PWA/website
