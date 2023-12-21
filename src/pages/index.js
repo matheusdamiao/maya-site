@@ -242,6 +242,7 @@ const IndexPage = () => {
 
             <form
               // action="https://fabform.io/f/ktxGzZs"
+              netlify
               data-netlify="true"
               data-netlify-honeypot="bot-field"
               onSubmit={e => handleFormRequest(e)}
