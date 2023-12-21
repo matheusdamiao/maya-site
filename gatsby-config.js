@@ -10,9 +10,9 @@
 module.exports = {
   siteMetadata: {
     title: `Maya faz 1 ano`,
-    description: `Site para os convidados do aniversário de 1 ano de Maya`,
+    description: `Confirme sua presença no niver de Maya!`,
     author: `Design by Luana Antunes & code by Matheus Damião`,
-    siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
+    siteUrl: `https://mayafaz1ano.netlify.app/`,
   },
   plugins: [
     "gatsby-plugin-postcss",
@@ -37,7 +37,7 @@ module.exports = {
         // https://css-tricks.com/meta-theme-color-and-trickery/
         // theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/favicon.png`, // This path is relative to the root of the site.
       },
     },
   ],
