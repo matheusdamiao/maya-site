@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Link } from "gatsby"
+import { Link, navigate } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 import bgImage from "./../images/bg-image-sky.png"
 import maya from "./../images/maya-central.png"
@@ -19,6 +19,61 @@ import * as styles from "../components/index.module.css"
 import Maps from "../components/maps"
 
 const IndexPage = () => {
+  const [inputs, setInputs] = React.useState({
+    nome: "",
+    adultos: "",
+    crianças: "",
+  })
+  const [isSent, setIsSent] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(false)
+
+  function encode(data) {
+    return Object.keys(data)
+      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+      .join("&")
+  }
+
+  const handleFormRequest = async event => {
+    event.preventDefault()
+
+    setIsLoading(true)
+
+    const form = event.target
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({
+        "form-name": form.getAttribute("name"),
+        ...inputs,
+      }),
+    })
+      .then(() =>
+        setTimeout(() => {
+          setIsSent(true)
+          setIsLoading(false)
+          setInputs({ nome: "", phone: "", email: "" })
+          navigate("/obrigado")
+          setTimeout(() => {
+            setIsSent(false)
+          }, 2000)
+        }, 2000)
+      )
+      .catch(error => alert(error))
+  }
+
+  const handleFormChange = event => {
+    let nome = event.target.name
+    let value = event.target.value
+    setInputs({
+      ...inputs,
+      [nome]: value,
+    })
+  }
+
+  React.useEffect(() => {
+    console.log(inputs)
+  }, [inputs])
+
   return (
     <div>
       <img
@@ -186,7 +241,11 @@ const IndexPage = () => {
             </div>
 
             <form
-              action="https://fabform.io/f/ktxGzZs"
+              // action="https://fabform.io/f/ktxGzZs"
+              data-netlify="true"
+              data-netlify-honeypot="bot-field"
+              onSubmit={e => handleFormRequest(e)}
+              name="contact"
               method="post"
               className="flex flex-col items-center justify-center gap-14 lg:gap-20 pt-10 lg:pt-10 relative lg:mt-0 max-w-4xl lg:m-auto"
             >
@@ -197,10 +256,12 @@ const IndexPage = () => {
                     Nome Completo
                   </label>
                   <input
-                    name="name"
+                    name="nome"
                     className=" rounded-[35px] h-[40px] pl-3"
                     type="text"
                     id="name"
+                    value={inputs.nome}
+                    onChange={e => handleFormChange(e)}
                     autoComplete="true"
                     required
                   />
@@ -213,7 +274,9 @@ const IndexPage = () => {
                   <input
                     name="adultos"
                     id="adultos"
-                    type="number"
+                    type="text"
+                    value={inputs.adultos}
+                    onChange={e => handleFormChange(e)}
                     required
                     className="rounded-[35px] h-[40px] pl-3 "
                   />
@@ -225,17 +288,44 @@ const IndexPage = () => {
                   <input
                     name="crianças"
                     id="crianças"
-                    type="number"
+                    type="text"
+                    value={inputs.crianças}
+                    onChange={e => handleFormChange(e)}
                     required
                     className="rounded-[35px] h-[40px] pl-3 "
                   />
                 </div>
               </div>
               <button
-                className="max-w-[280px]  lg:max-w-[350px]  w-full bg-[#A56195] py-3 lg:py-2 px-6 rounded-[35px] text-white text-base lg:text-xl"
+                className="max-w-[280px] flex items-center justify-center  lg:max-w-[350px]  w-full bg-[#A56195] py-3 lg:py-2 px-6 rounded-[35px] text-white text-base lg:text-xl"
                 type="submit"
               >
-                Confirmar presença
+                {isLoading && (
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill="#FFFFF"
+                      d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"
+                    >
+                      <animateTransform
+                        attributeName="transform"
+                        type="rotate"
+                        dur="0.75s"
+                        values="0 12 12;360 12 12"
+                        repeatCount="indefinite"
+                      />
+                    </path>
+                  </svg>
+                )}
+                {isSent
+                  ? "Mensagem enviada!"
+                  : isLoading
+                  ? ""
+                  : "Confirmar presença"}
               </button>
 
               <div className="absolute bottom-[-100px] right-7 flex items-center">
